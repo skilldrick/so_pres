@@ -62,6 +62,7 @@
 
   var slideshow = (function () {
     var slides = [];
+    var meta = null;
     var destinationSlide;
     var navDisabled = false;
     var timeout;
@@ -96,10 +97,11 @@
 
     function setTitle() {
       if (currentSlide === 0) {
-        document.title = 'jQuery.tmpl() presentation';
+        document.title = meta.title;
       }
       else {
-        document.title = 'jQuery.tmpl() - ' + slides[currentSlide].title;
+        document.title = meta.short_title 
+          + ' - ' + slides[currentSlide].title;
       }
     }
     
@@ -204,6 +206,7 @@
     function init() {
       $.getJSON('content.json', function (data) {
         slides = data.slides;
+        meta = data.meta;
         var tmpl_selector;
         var slide;
         destinationSlide = getSlideNumberFromHash(document.location.hash);
